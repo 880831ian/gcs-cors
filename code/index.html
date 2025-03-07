@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCS CORS 測試</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>GCS CORS 測試</h1>
+    <label for="url">GCS URL：</label>
+    <input type="text" id="url" placeholder="https://storage.googleapis.com/YOUR_BUCKET/YOUR_OBJECT" size="50">
+    <button onclick="fetchGCS()">測試</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function fetchGCS() {
+            const url = document.getElementById('url').value;
+            const output = document.getElementById('output');
+            output.textContent = '請求中...';
+
+            try {
+                const response = await axios.get(url);
+                output.textContent = `成功！\n\n${JSON.stringify(response.data, null, 2)}`;
+            } catch (error) {
+                output.textContent = `錯誤：${error.response ? JSON.stringify(error.response.data, null, 2) : error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
